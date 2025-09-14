@@ -2,11 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "library API",
-  "main": "app.js",
   "type": "module",
   "scripts": {
-    "inicio": "nodemon node app.js",
-    "build": "netlify deploy --prod"
+    "deploy": "netlify deploy --prod"
   },
   "author": "Eder TS",
   "license": "ISC",
@@ -15,7 +13,6 @@
     "dotenv": "^17.2.2",
     "express": "^5.1.0",
     "netlify-cli": "^23.5.1",
-    "netlify-lambda": "^2.0.16",
     "serverless-http": "^4.0.0",
     "sqlite3": "^5.1.7",
     "zod": "^4.1.5"
