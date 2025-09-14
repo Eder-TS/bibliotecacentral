@@ -20,5 +20,5 @@ app.use((req, res) => {
 const lambda = serverless(app);
 
 export async function handler(event, context) {
-  return lambda(event, context);
+  return await lambda(event, context);
 }
