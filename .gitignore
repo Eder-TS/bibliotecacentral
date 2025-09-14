@@ -3,4 +3,5 @@ node_modules
 base_de_dados_biblioteca.db
 .prettierrc
 eslint.config.js
-netlify.toml
+# Local Netlify folder
+.netlify
