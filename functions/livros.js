@@ -1,28 +1,16 @@
-import express from 'express';
-import serverless from 'serverless-http';
-import livroControllers from '../src/controllers/livroControllers.js';
-import cors from 'cors';
-
-const livros = express();
-
-livros.use(express.json());
-
-livros.use(cors());
-
-const router = express.Router();
-
-router.get('/', livroControllers.buscaTodosLivrosController);
-
-livros.use('/.netlify/functions/livros', router);
-
-livros.use((req, res) => {
-  res.status(404).send({
-    mensagem: `Rota ${req.method} ${req.originalUrl} não encontrada.`,
-  });
-});
-
-const lambda = serverless(livros);
+import * as livroControllers from '../src/controllers/livroControllers.js';
 
 export async function handler(event, context) {
-  return await lambda(event, context);
+  try {
+    const livros = await livroControllers.default.buscaTodosLivrosController();
+    return {
+      statusCode: 200,
+      body: JSON.stringify(livros),
+    };
+  } catch (err) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: err.message }),
+    };
+  }
 }
