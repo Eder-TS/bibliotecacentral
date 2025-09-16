@@ -1,11 +1,8 @@
-import sqlite3 from 'sqlite3';
+import { createClient } from '@libsql/client';
 
-const bd = new sqlite3.Database('base_de_dados_biblioteca.db', (erro) => {
-  if (erro) {
-    console.log('Erro aoc onectar na base de dados: ', erro.message);
-  } else {
-    console.log('Base de dados da biblioteca conectada.');
-  }
+const bd = createClient({
+  url: process.env.TURSO_DATABASE_URL,
+  authToken: process.env.TURSO_AUTH_TOKEN,
 });
 
 export default bd;

@@ -1,126 +1,54 @@
 import bd from '../configs/baseDeDados.js';
 
-bd.run(
-  `
-        CREATE TABLE IF NOT EXISTS livros (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            titulo TEXT NOT NULL,
-            num_paginas INTEGER NOT NULL,
-            isbn TEXT NOT NULL,
-            editora TEXT NOT NULL
-        )
-    `,
-);
+export async function criaLivroRepository(novoLivro) {
+  const { titulo, num_paginas, isbn, editora } = novoLivro;
 
-function criaLivroRepository(novoLivro) {
-  return new Promise((resolve, reject) => {
-    const { titulo, num_paginas, isbn, editora } = novoLivro;
-
-    bd.run(
-      `
+  const result = await bd.execute({
+    sql: `
                 INSERT INTO livros (titulo, num_paginas, isbn, editora)
                 VALUES (?, ?, ?, ?)
             `,
-      [titulo, num_paginas, isbn, editora],
-      function (error) {
-        if (error) {
-          reject(error);
-        } else {
-          resolve({ id: this.lastID, ...novoLivro });
-        }
-      },
-    );
+    args: [titulo, num_paginas, isbn, editora],
   });
+  return { id: result.lastInsertRowid, ...novoLivro };
 }
 
-function buscaTodosLivrosRepository() {
-  return new Promise((resolve, reject) => {
-    bd.all(
-      `
-                SELECT id, titulo, num_paginas, isbn, editora
-                FROM livros
-            `,
-      [],
-      (error, rows) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(rows);
-        }
-      },
-    );
-  });
+export async function buscaTodosLivrosRepository() {
+  const result = await bd.execute(
+    'SELECT id, titulo, num_paginas, isbn, editora FROM livros',
+  );
+  return result.rows;
 }
 
-function buscaLivroPorIdRepository(livroId) {
-  return new Promise((resolve, reject) => {
-    bd.get(
-      `
-                SELECT *
-                FROM livros
-                WHERE id = ?
-            `,
-      [livroId],
-      (error, row) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(row);
-        }
-      },
-    );
+export async function buscaLivroPorIdRepository(livroId) {
+  const result = await bd.execute({
+    sql: 'SELECT * FROM livros WHERE id = ?',
+    args: [livroId],
   });
+  return result.rows[0] ?? null;
 }
 
-function atualizaLivroRepository(livroId, livroAtualizado) {
-  return new Promise((resolve, reject) => {
-    const { titulo, num_paginas, isbn, editora } = livroAtualizado;
-
-    bd.run(
-      `
-        UPDATE livros
-        SET titulo = ?, num_paginas = ?, isbn = ?, editora = ?
-        WHERE id = ?
-      `,
-      [titulo, num_paginas, isbn, editora, livroId],
-      (error) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve({
-            message: 'Livro alterado com sucesso.',
-            id: livroId,
-            ...livroAtualizado,
-          });
-        }
-      },
-    );
+export async function atualizaLivroRepository(livroId, livroAtualizado) {
+  const { titulo, num_paginas, isbn, editora } = livroAtualizado;
+  await bd.execute({
+    sql: `
+      UPDATE livros
+      SET titulo = ?, num_paginas = ?, isbn = ?, editora = ?
+      WHERE id = ?
+    `,
+    args: [titulo, num_paginas, isbn, editora, livroId],
   });
+  return {
+    message: 'Livro alterado com sucesso.',
+    id: livroId,
+    ...livroAtualizado,
+  };
 }
 
-function deletaLivroRepository(livroId) {
-  return new Promise((resolve, reject) => {
-    bd.all(
-      `
-                DELETE FROM livros
-                WHERE id = ?
-            `,
-      [livroId],
-      (error) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve({ message: 'Livro deletado com sucesso.', livroId });
-        }
-      },
-    );
+export async function deletaLivroRepository(livroId) {
+  await bd.execute({
+    sql: 'DELETE FROM livros WHERE id = ?',
+    args: [livroId],
   });
+  return { message: 'Livro deletado com sucesso.', livroId };
 }
-
-export default {
-  criaLivroRepository,
-  buscaTodosLivrosRepository,
-  buscaLivroPorIdRepository,
-  atualizaLivroRepository,
-  deletaLivroRepository,
-};
