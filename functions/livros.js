@@ -1,6 +1,6 @@
 import express from 'express';
 import serverless from 'serverless-http';
-import livroControllers from '../src/controllers/livroControllers';
+import livroControllers from '../src/controllers/livroControllers.js';
 import cors from 'cors';
 
 const app = express();
