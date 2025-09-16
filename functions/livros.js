@@ -11,7 +11,7 @@ app.use(cors());
 
 const router = express.Router();
 
-router.get('/livros', livroControllers.buscaTodosLivrosController);
+router.get('/', livroControllers.buscaTodosLivrosController);
 
 app.use('/.netlify/functions/livros', router);
 
