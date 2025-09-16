@@ -5,6 +5,10 @@ import { livroSchema } from '../schemas/livroSchemas.js';
 
 const router = Router();
 
+router.get('/', (req, res) => {
+  res.send('App is running..');
+});
+
 router.get('/livros', livroControllers.buscaTodosLivrosController);
 
 router.get(

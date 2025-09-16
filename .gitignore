@@ -3,5 +3,6 @@ node_modules
 base_de_dados_biblioteca.db
 .prettierrc
 eslint.config.js
+.env
 # Local Netlify folder
 .netlify
