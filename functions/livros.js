@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get('/livros', livroControllers.buscaTodosLivrosController);
 
-app.use('/.netlify/functions/app', router);
+app.use('/.netlify/functions/livros', router);
 
 app.use((req, res) => {
   res.status(404).send({
