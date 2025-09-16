@@ -1,6 +1,6 @@
 import express from 'express';
 import serverless from 'serverless-http';
-import router from '../src/routes/livroRoutes.js';
+//import router from '../src/routes/livroRoutes.js';
 import cors from 'cors';
 
 const app = express();
@@ -8,6 +8,12 @@ const app = express();
 app.use(express.json());
 
 app.use(cors());
+
+const router = express.Router();
+
+router.get('/', (req, res) => {
+  res.send('App is running..');
+});
 
 app.use('/.netlify/functions/app', router);
 
