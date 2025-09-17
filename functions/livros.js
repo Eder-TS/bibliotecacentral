@@ -1,8 +1,8 @@
-import * as livroControllers from '../src/controllers/livroControllers.js';
+import livroControllers from '../src/controllers/livroControllers.js';
 
 export async function handler(event, context) {
   try {
-    const livros = await livroControllers.default.buscaTodosLivrosController();
+    const livros = await livroControllers.buscaTodosLivrosController();
     return {
       statusCode: 200,
       body: JSON.stringify(livros),
