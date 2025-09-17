@@ -1,4 +1,4 @@
-import livroControllers from '../src/controllers/livroControllers.js';
+import livroControllers from '../src/controllers/livroControllers';
 
 export async function handler(event, context) {
   try {
