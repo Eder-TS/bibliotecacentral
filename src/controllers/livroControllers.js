@@ -11,7 +11,7 @@ async function criaLivroController(req, res) {
   }
 }
 
-async function buscaTodosLivrosController(req, res) {
+export async function buscaTodosLivrosController(req, res) {
   try {
     const livros = await livroServices.buscaTodosLivrosService();
     res.send(livros);
@@ -58,7 +58,6 @@ async function deletaLivroController(req, res) {
 
 export default {
   criaLivroController,
-  buscaTodosLivrosController,
   buscaLivroPorIdController,
   atualizaLivroController,
   deletaLivroController,
