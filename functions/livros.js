@@ -13,9 +13,11 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const livros = await livroServices.buscaTodosLivrosService();
-    res.send(livros);
+    console.log('peidando');
+    // const livros = await livroServices.buscaTodosLivrosService();
+    // res.send(livros);
   } catch (erro) {
+    console.log(erro);
     res.status(400).send(erro.message);
   }
 });
