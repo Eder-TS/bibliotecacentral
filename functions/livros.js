@@ -13,16 +13,15 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    console.log('peidando');
-    // const livros = await livroServices.buscaTodosLivrosService();
-    // res.send(livros);
+    const livros = await livroServices.buscaTodosLivrosService();
+    res.send(livros);
   } catch (erro) {
     console.log(erro);
     res.status(400).send(erro.message);
   }
 });
 
-app.use('/livros', router);
+app.use('/.netlify/functions/livros', router);
 
 app.use((req, res) => {
   res.status(404).send({
