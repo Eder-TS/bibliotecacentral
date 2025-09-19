@@ -1,6 +1,6 @@
 import express from 'express';
 import serverless from 'serverless-http';
-//import router from '../src/routes/livroRoutes.js';
+import livroServices from '../src/services/livroServices.js';
 import cors from 'cors';
 
 const app = express();
@@ -13,6 +13,15 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   res.send('App is running..');
+});
+
+router.get('/livros', async (req, res) => {
+  try {
+    const livros = await livroServices.buscaTodosLivrosService();
+    res.send(livros);
+  } catch (erro) {
+    res.status(400).send(erro.message);
+  }
 });
 
 app.use('/.netlify/functions/app', router);
