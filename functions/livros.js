@@ -12,13 +12,13 @@ app.use(cors());
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  try {
-    const livros = await livroServices.buscaTodosLivrosService();
-    res.send(livros);
-  } catch (erro) {
-    console.log(erro);
-    res.status(400).send(erro.message);
-  }
+  //try {
+  const livros = await livroServices.buscaTodosLivrosService();
+  res.send(livros);
+  // } catch (erro) {
+  // console.log(erro);
+  //res.status(400).send(erro.message);
+  // }
 });
 
 app.use('/.netlify/functions/livros', router);
