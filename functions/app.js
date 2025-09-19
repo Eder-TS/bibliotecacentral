@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 router.get('/livros', async (req, res) => {
   try {
     const livros = await livroServices.buscaTodosLivrosService();
-    res.send(livros);
+    res.send({ livros });
   } catch (erro) {
     res.status(400).send(erro.message);
   }
